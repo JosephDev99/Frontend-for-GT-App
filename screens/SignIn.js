@@ -7,7 +7,6 @@ import { HeaderHeight } from "../constants/utils";
 import { Formik, Field } from 'formik'
 import * as yup from 'yup'
 import CustomInput from '../components/CustomInput'
-
 const { width } = Dimensions.get('window');
 
 export default class SignIn extends React.Component {
@@ -218,7 +217,7 @@ export default class SignIn extends React.Component {
                       <Block flex={1} center>
                         <Image source={require('../assets/images/apple-phone.png')} style={{ width: 20, height: 20 }} />
                       </Block>
-                      <Block flex={10}>
+                      <Block flex={15}>
                         <Field
                           component={CustomInput}
                           name="phoneNumber"
@@ -231,7 +230,7 @@ export default class SignIn extends React.Component {
                       <Block flex={1} center>
                         <Image source={require('../assets/images/forgot-password.png')} style={{ width: 20, height: 20 }} />
                       </Block>
-                      <Block flex={10}>
+                      <Block flex={15}>
                         <Field
                           component={CustomInput}
                           name="password"
