@@ -25,6 +25,7 @@
     "expo-asset": "~8.3.2",
     "expo-font": "~9.2.1",
     "expo-linear-gradient": "~9.2.0",
+    "formik": "^2.2.9",
     "galio-framework": "^0.8.0",
     "react": "16.13.1",
     "react-material-ui-form-validator": "^3.0.1",
@@ -35,7 +36,8 @@
     "react-native-phone-number-input": "^2.1.0",
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",
-    "react-native-screens": "~3.4.0"
+    "react-native-screens": "~3.4.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "babel-preset-expo": "8.3.0",

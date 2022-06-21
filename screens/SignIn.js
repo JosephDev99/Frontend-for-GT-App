@@ -1,21 +1,20 @@
 import React, { useRef } from 'react';
 import { StyleSheet, Dimensions, KeyboardAvoidingView, Alert, Platform, Image, View } from 'react-native';
 import { Block, Button, Input, Text, theme } from 'galio-framework';
-// import { ValidatorComponent, ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-// import TextField from '@mui/material/TextField';
 import { LinearGradient } from 'expo-linear-gradient';
 import { materialTheme } from '../constants/';
 import { HeaderHeight } from "../constants/utils";
+import { Formik, Field } from 'formik'
+import * as yup from 'yup'
+import CustomInput from '../components/CustomInput'
 
 const { width } = Dimensions.get('window');
 
-export default class SignIn extends ValidatorComponent {
+export default class SignIn extends React.Component {
   state = {
     phone_number: '',
     // email: '',
     password: '',
-    errPhoneMsg: '',
-    errPasswordMsg: '',
     active: {
       phone_number: false,
       // email: false,
@@ -27,21 +26,25 @@ export default class SignIn extends ValidatorComponent {
 
   handleChange = (name, value) => {
     this.setState({ [name]: value });
-    let passw = /^^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    if (isNaN(this.state.phone_number)) {
-      this.state.errPhoneMsg = "Write only Number";
-    } else if (this.state.phone_number[0] == '0') {
-      this.state.errPhoneMsg = "FirstNumber should not be 0";
-    } else if (this.state.phone_number.length !== 10) {
-      this.state.errPhoneMsg = "Phone Number should be 10 number"
-    } else {
-      this.state.errPhoneMsg = ""
-    }
-    if (!this.state.password.match(passw)) {
-      this.state.errPasswordMsg = "Password should be more than 8 characters, including uppercase, lowercase, number"
-    } else {
-      this.state.errPasswordMsg = ""
-    }
+    // let passw = /^^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    // if (name = 'phone_number') {
+    //   if (isNaN(this.state.phone_number)) {
+    //     this.state.errPhoneMsg = "Write only Number";
+    //   } else if (this.state.phone_number[0] == '0') {
+    //     this.state.errPhoneMsg = "FirstNumber should not be 0";
+    //   } else if (this.state.phone_number.length !== 10) {
+    //     this.state.errPhoneMsg = "Phone Number should be 10 number"
+    //   } else {
+    //     this.state.errPhoneMsg = ""
+    //   }
+    // }
+    // if (name = 'password') {
+    //   if (!this.state.password.match(passw)) {
+    //     this.state.errPasswordMsg = "Password should be more than 8 characters, including uppercase, lowercase, number"
+    //   } else {
+    //     this.state.errPasswordMsg = ""
+    //   }
+    // }
   }
 
   toggleActive = (name) => {
@@ -50,16 +53,26 @@ export default class SignIn extends ValidatorComponent {
 
     this.setState({ active });
   }
-
-  Login = () => {
-
-  }
-
   render() {
     const { navigation } = this.props;
     const { phone_number, password } = this.state;
     // const phoneInput = useRef < PhoneInput > (null);
+    const signInValidationSchema = yup.object().shape({
+      phoneNumber: yup
+        .string()
+        .matches(/^($|[^0])(\d){9}\b/, 'Phone number should be 10 number and start since 1')
+        .required('Phone number is required'),
+      password: yup
+        .string()
+        .matches(/\w*[a-z]\w*/, "Password must have a small letter")
+        .matches(/\w*[A-Z]\w*/, "Password must have a capital letter")
+        .matches(/\d/, "Password must have a number")
+        .min(8, ({ min }) => `Password must be at least ${min} characters`)
+        .required('Password is required'),
+    })
+
     return (
+
       <LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 0.25, y: 1.1 }}
@@ -67,9 +80,9 @@ export default class SignIn extends ValidatorComponent {
         // colors={['#6C24AA', '#15002B']}
         colors={['white', 'white']}
         style={[styles.signin, { flex: 1, paddingTop: theme.SIZES.BASE * 4 }]}>
-        <Block flex middle>
+        <Block middle>
           <KeyboardAvoidingView behavior="padding" enabled>
-            <Block middle>
+            {/* <Block middle>
               <Block row center space="between" style={{ marginVertical: theme.SIZES.BASE * 1.875 }}>
                 <Block flex middle right>
                   <Button
@@ -114,48 +127,14 @@ export default class SignIn extends ValidatorComponent {
                   />
                 </Block>
               </Block>
-            </Block>
+            </Block> */}
             <Block middle style={{ paddingVertical: theme.SIZES.BASE * 2.625 }}>
               <Image source={require('../assets/images/pic.png')} />
-              {/* <Image
-                source={{ uri: 'asset:/images:/pic.png' }}
-                style={{ width: 100, height: 100 }}
-              /> */}
             </Block>
             <Block flex>
-              <Block center>
-                {/* <ValidatorForm
-                  ref="form"
-                  onSubmit={this.handleSubmit}
-                  onError={errors => console.log(errors)}
-                >
-                  <TextValidator
-                    label="Email"
-                    onChange={this.handleChange}
-                    name="email"
-                    value={email}
-                    validators={['required', 'isEmail']}
-                    errorMessages={['this field is required', 'email is not valid']}
-                  />
-                  <Button type="submit">Submit</Button>
-                </ValidatorForm> */}
-                {/* <Input
-                  borderless
-                  color="white"
-                  placeholder="Email"
-                  type="email-address"
-                  autoCapitalize="none"
-                  bgColor='transparent'
-                  onBlur={() => this.toggleActive('email')}
-                  onFocus={() => this.toggleActive('email')}
-                  placeholderTextColor={materialTheme.COLORS.PLACEHOLDER}
-                  onChangeText={text => this.handleChange('email', text)}
-                  style={[styles.input, this.state.active.email ? styles.inputActive : null]}
-                /> */}
-                {/* <Icon name="pin-3" family="Galio" color='blue' size={10} /> */}
+              {/* <Block center>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image source={require('../assets/images/apple-phone.png')} style={{ width: 20, height: 20 }} />
-                  {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
                   <Input
                     class="phone_number"
                     borderless
@@ -164,7 +143,6 @@ export default class SignIn extends ValidatorComponent {
                     type="phone_number"
                     autoCapitalize="none"
                     bgColor='transparent'
-                    variant='outlined'
                     onBlur={() => this.toggleActive('phone_number')}
                     onFocus={() => this.toggleActive('phone_number')}
                     placeholderTextColor={materialTheme.COLORS.PLACEHOLDER}
@@ -225,11 +203,75 @@ export default class SignIn extends ValidatorComponent {
                     {"Don't have an account? Sign Up"}
                   </Text>
                 </Button>
-              </Block>
+              </Block> */}
+              <Formik
+                initialValues={{
+                  phoneNumber: '',
+                  password: '',
+                }}
+                onSubmit={values => console.log(values)}
+                validationSchema={signInValidationSchema}
+              >
+                {({ handleSubmit, isValid }) => (
+                  <Block center>
+                    <Block row width={300}>
+                      <Block flex={1} center>
+                        <Image source={require('../assets/images/apple-phone.png')} style={{ width: 20, height: 20 }} />
+                      </Block>
+                      <Block flex={10}>
+                        <Field
+                          component={CustomInput}
+                          name="phoneNumber"
+                          placeholder="Phone Number"
+                          keyboardType="numeric"
+                        />
+                      </Block>
+                    </Block>
+                    <Block row width={300}>
+                      <Block flex={1} center>
+                        <Image source={require('../assets/images/forgot-password.png')} style={{ width: 20, height: 20 }} />
+                      </Block>
+                      <Block flex={10}>
+                        <Field
+                          component={CustomInput}
+                          name="password"
+                          placeholder="Password"
+                          secureTextEntry
+                        />
+                      </Block>
+                    </Block>
+                    <Block center flex style={{ marginTop: 20 }}>
+                      <Button
+                        size="large"
+                        shadowless
+                        // color={materialTheme.COLORS.BUTTON_COLOR}
+                        color='yellow'
+                        style={{ height: 48, width: 300 }}
+                        onPress={handleSubmit}
+                        disabled={!isValid}
+                      >
+                        <Text style={{ color: 'black' }}>SIGN IN</Text>
+                      </Button>
+                      <Button size="large" color="transparent" shadowless onPress={() => navigation.navigate('Sign Up')}>
+                        <Text
+                          center
+                          color={theme.COLORS.BLACK}
+                          size={theme.SIZES.FONT * 0.75}
+                          style={{ marginTop: 20 }}
+                        >
+                          {"Don't have an account? Sign Up"}
+                        </Text>
+                      </Button>
+                    </Block>
+                  </Block>
+                )}
+              </Formik>
+
             </Block>
           </KeyboardAvoidingView>
         </Block >
       </LinearGradient >
+
     );
   }
 }
@@ -260,7 +302,17 @@ const styles = StyleSheet.create({
   inputActive: {
     borderBottomColor: "white",
   },
-  // phone_number_background:{
-  //   background
-  // },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signupContainer: {
+    width: '80%',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 10,
+    elevation: 10,
+    backgroundColor: '#e6e6e6'
+  },
 });
