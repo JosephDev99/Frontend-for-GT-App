@@ -12,67 +12,50 @@ import * as yup from 'yup'
 import CustomInput from '../components/CustomInput'
 const { height, width } = Dimensions.get('window');
 
-export default class SignUp extends React.Component {
-  state = {
-    user: '',
-    phone_number: '',
-    password: '',
-    confirm_password: '',
-    active: {
-      user: false,
-      phone_number: false,
-      password: false,
-      confirm_password: false
-    }
-  }
+const SignUp = () => {
+  // handleChange = (name, value) => {
+  //   this.setState({ [name]: value });
+  // }
 
-  handleChange = (name, value) => {
-    this.setState({ [name]: value });
-  }
+  // toggleActive = (name) => {
+  //   const { active } = this.state;
+  //   active[name] = !active[name];
 
-  toggleActive = (name) => {
-    const { active } = this.state;
-    active[name] = !active[name];
-
-    this.setState({ active });
-  }
-
-
-  render() {
-    const { navigation } = this.props;
-    const signUpValidationSchema = yup.object().shape({
-      Username: yup
-        .string()
-        .matches(/^\S*$/, 'Space should not be to username')
-        .required('Full name is required'),
-      phoneNumber: yup
-        .string()
-        .matches(/^($|[^0])(\d){9}\b/, 'Phone number should be 10 number and first number should not 0')
-        .required('Phone number is required'),
-      password: yup
-        .string()
-        .matches(/\w*[a-z]\w*/, "Password must have a small letter")
-        .matches(/\w*[A-Z]\w*/, "Password must have a capital letter")
-        .matches(/\d/, "Password must have a number")
-        .min(8, ({ min }) => `Password must be at least ${min} characters`)
-        .required('Password is required'),
-      confirmPassword: yup
-        .string()
-        .oneOf([yup.ref('password')], 'Passwords do not match')
-        .required('Confirm password is required'),
-    })
-    return (
-      <LinearGradient
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0.25, y: 1.1 }}
-        locations={[0.2, 1]}
-        colors={['white', 'white']}
-        // colors={['#6C24AA', '#15002B']}
-        style={[styles.signup, { flex: 1, paddingTop: theme.SIZES.BASE * 4 }]}>
-        <Block flex middle>
-          <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "position"} enabled keyboardVerticalOffset={0}>
-            <Block style={{ marginBottom: height * 0.05 }}>
-              {/* <Block row center space="between" style={{ marginVertical: theme.SIZES.BASE * 1.875 }}>
+  //   this.setState({ active });
+  // }
+  const signUpValidationSchema = yup.object().shape({
+    Username: yup
+      .string()
+      .matches(/^\S*$/, 'Space should not be to username')
+      .required('Full name is required'),
+    phoneNumber: yup
+      .string()
+      .matches(/^($|[^0])(\d){9}\b/, 'Phone number should be 10 number and first number should not 0')
+      .required('Phone number is required'),
+    password: yup
+      .string()
+      .matches(/\w*[a-z]\w*/, "Password must have a small letter")
+      .matches(/\w*[A-Z]\w*/, "Password must have a capital letter")
+      .matches(/\d/, "Password must have a number")
+      .min(8, ({ min }) => `Password must be at least ${min} characters`)
+      .required('Password is required'),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref('password')], 'Passwords do not match')
+      .required('Confirm password is required'),
+  })
+  return (
+    <LinearGradient
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0.25, y: 1.1 }}
+      locations={[0.2, 1]}
+      colors={['white', 'white']}
+      // colors={['#6C24AA', '#15002B']}
+      style={[styles.signup, { flex: 1, paddingTop: theme.SIZES.BASE * 4 }]}>
+      <Block flex middle>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "position"} enabled keyboardVerticalOffset={0}>
+          <Block style={{ marginBottom: height * 0.05 }}>
+            {/* <Block row center space="between" style={{ marginVertical: theme.SIZES.BASE * 1.875 }}>
                 <Block flex middle right>
                   <Button
                     round
@@ -116,12 +99,12 @@ export default class SignUp extends React.Component {
                   />
                 </Block>
               </Block> */}
-              <Block middle style={{ paddingVertical: theme.SIZES.BASE * 2.625 }}>
-                <Image source={require('../assets/images/pic.png')} />
-              </Block>
+            <Block middle style={{ paddingVertical: theme.SIZES.BASE * 2.625 }}>
+              <Image source={require('../assets/images/pic.png')} />
             </Block>
-            <Block flex={1} center space="between">
-              {/* <Block center>
+          </Block>
+          <Block flex={1} center space="between">
+            {/* <Block center>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image source={require('../assets/images/user.png')} style={{ width: 20, height: 20 }} />
                   <Input
@@ -205,96 +188,90 @@ export default class SignUp extends React.Component {
                   </Text>
                 </Button>
               </Block> */}
-              <Formik
-                initialValues={{
-                  Username: '',
-                  phoneNumber: '',
-                  password: '',
-                  confirmPassword: '',
-                }}
-                onSubmit={values => console.log(values)}
-                validationSchema={signUpValidationSchema}
-              >
-                {({ handleSubmit, isValid }) => (
-                  <Block center>
-                    <Block row width={300}>
-                      <Block flex={1} center>
-                        <Image source={require('../assets/images/user.png')} style={{ width: 20, height: 20 }} />
-                      </Block>
-                      <Block flex={15}>
-                        <Field
-                          component={CustomInput}
-                          name="Username"
-                          placeholder="Username"
-                        />
-                      </Block>
+            <Formik
+              initialValues={{
+                Username: '',
+                phoneNumber: '',
+                password: '',
+                confirmPassword: '',
+              }}
+              onSubmit={values => console.log(values)}
+              validationSchema={signUpValidationSchema}
+            >
+              {({ handleSubmit, isValid }) => (
+                <Block center>
+                  <Block row width={300}>
+                    <Block flex={1} center>
+                      <Image source={require('../assets/images/user.png')} style={{ width: 20, height: 20 }} />
                     </Block>
-                    <Block row width={300}>
-                      <Block flex={1} center>
-                        <Image source={require('../assets/images/apple-phone.png')} style={{ width: 20, height: 20 }} />
-                      </Block>
-                      <Block flex={15}>
-                        <Field
-                          component={CustomInput}
-                          name="phoneNumber"
-                          placeholder="Phone Number"
-                          keyboardType="numeric"
-                        />
-                      </Block>
-                    </Block>
-                    <Block row width={300}>
-                      <Block flex={1} center>
-                        <Image source={require('../assets/images/forgot-password.png')} style={{ width: 20, height: 20 }} />
-                      </Block>
-                      <Block flex={15}>
-                        <Field
-                          component={CustomInput}
-                          name="password"
-                          placeholder="Password"
-                          secureTextEntry
-                        />
-                      </Block>
-                    </Block>
-                    <Block row width={300}>
-                      <Block flex={1} center>
-                        <Image source={require('../assets/images/forgot-password.png')} style={{ width: 20, height: 20 }} />
-                      </Block>
-                      <Block flex={15}>
-                        <Field
-                          component={CustomInput}
-                          name="confirmPassword"
-                          placeholder="Confirm Password"
-                          secureTextEntry
-                        />
-                      </Block>
-                    </Block>
-                    <Block center flex style={{ marginTop: 20 }}>
-                      <Button
-                        size="large"
-                        shadowless
-                        // color={materialTheme.COLORS.BUTTON_COLOR}
-                        color='yellow'
-                        style={{ height: 48, width: 300 }}
-                        onPress={handleSubmit}
-                        disabled={!isValid}
-                      >
-                        <Text style={{ color: 'black' }}>SIGN IN</Text>
-                      </Button>
-                      <Button size="large" color="transparent" shadowless onPress={() => navigation.navigate('Sign In')}>
-                        <Text center color={theme.COLORS.Black} size={theme.SIZES.FONT * 0.75}>
-                          Already have an account? Sign In
-                        </Text>
-                      </Button>
+                    <Block flex={15}>
+                      <Field
+                        component={CustomInput}
+                        name="Username"
+                        placeholder="Username"
+                      />
                     </Block>
                   </Block>
-                )}
-              </Formik>
-            </Block>
-          </KeyboardAvoidingView>
-        </Block>
-      </LinearGradient>
-    );
-  }
+                  <Block row width={300}>
+                    <Block flex={1} center>
+                      <Image source={require('../assets/images/apple-phone.png')} style={{ width: 20, height: 20 }} />
+                    </Block>
+                    <Block flex={15}>
+                      <Field
+                        component={CustomInput}
+                        name="phoneNumber"
+                        placeholder="Phone Number"
+                        keyboardType="numeric"
+                      />
+                    </Block>
+                  </Block>
+                  <Block row width={300}>
+                    <Block flex={1} center>
+                      <Image source={require('../assets/images/forgot-password.png')} style={{ width: 20, height: 20 }} />
+                    </Block>
+                    <Block flex={15}>
+                      <Field
+                        component={CustomInput}
+                        name="password"
+                        placeholder="Password"
+                        secureTextEntry
+                      />
+                    </Block>
+                  </Block>
+                  <Block row width={300}>
+                    <Block flex={1} center>
+                      <Image source={require('../assets/images/forgot-password.png')} style={{ width: 20, height: 20 }} />
+                    </Block>
+                    <Block flex={15}>
+                      <Field
+                        component={CustomInput}
+                        name="confirmPassword"
+                        placeholder="Confirm Password"
+                        secureTextEntry
+                      />
+                    </Block>
+                  </Block>
+                  <Block center flex style={{ marginTop: 20 }}>
+                    <Button
+                      size="large"
+                      shadowless
+                      // color={materialTheme.COLORS.BUTTON_COLOR}
+                      color='yellow'
+                      style={{ height: 48, width: 300 }}
+                      onPress={handleSubmit}
+                      disabled={!isValid}
+                    >
+                      <Text style={{ color: 'black' }}>SIGN IN</Text>
+                    </Button>
+                  </Block>
+                </Block>
+              )}
+            </Formik>
+          </Block>
+        </KeyboardAvoidingView>
+      </Block>
+    </LinearGradient>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -337,3 +314,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#e6e6e6'
   },
 });
+export default SignUp;

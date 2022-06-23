@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Dimensions, KeyboardAvoidingView, Alert, Platform, Image, View } from 'react-native';
 import { Block, Button, Input, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,79 +9,34 @@ import * as yup from 'yup'
 import CustomInput from '../components/CustomInput'
 const { width } = Dimensions.get('window');
 
-export default class SignIn extends React.Component {
-  state = {
-    phone_number: '',
-    // email: '',
-    password: '',
-    active: {
-      phone_number: false,
-      // email: false,
-      password: false,
-    }
-  }
+const SignIn = () => {
+  // const { navigation } = this.props;
+  // const phoneInput = useRef < PhoneInput > (null);
+  const signInValidationSchema = yup.object().shape({
+    phoneNumber: yup
+      .string()
+      .matches(/^($|[^0])(\d){9}\b/, 'Phone number should be 10 number and start since 1')
+      .required('Phone number is required'),
+    password: yup
+      .string()
+      .matches(/\w*[a-z]\w*/, "Password must have a small letter")
+      .matches(/\w*[A-Z]\w*/, "Password must have a capital letter")
+      .matches(/\d/, "Password must have a number")
+      .min(8, ({ min }) => `Password must be at least ${min} characters`)
+      .required('Password is required'),
+  })
 
-
-
-  handleChange = (name, value) => {
-    this.setState({ [name]: value });
-    // let passw = /^^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    // if (name = 'phone_number') {
-    //   if (isNaN(this.state.phone_number)) {
-    //     this.state.errPhoneMsg = "Write only Number";
-    //   } else if (this.state.phone_number[0] == '0') {
-    //     this.state.errPhoneMsg = "FirstNumber should not be 0";
-    //   } else if (this.state.phone_number.length !== 10) {
-    //     this.state.errPhoneMsg = "Phone Number should be 10 number"
-    //   } else {
-    //     this.state.errPhoneMsg = ""
-    //   }
-    // }
-    // if (name = 'password') {
-    //   if (!this.state.password.match(passw)) {
-    //     this.state.errPasswordMsg = "Password should be more than 8 characters, including uppercase, lowercase, number"
-    //   } else {
-    //     this.state.errPasswordMsg = ""
-    //   }
-    // }
-  }
-
-  toggleActive = (name) => {
-    const { active } = this.state;
-    active[name] = !active[name];
-
-    this.setState({ active });
-  }
-  render() {
-    const { navigation } = this.props;
-    const { phone_number, password } = this.state;
-    // const phoneInput = useRef < PhoneInput > (null);
-    const signInValidationSchema = yup.object().shape({
-      phoneNumber: yup
-        .string()
-        .matches(/^($|[^0])(\d){9}\b/, 'Phone number should be 10 number and start since 1')
-        .required('Phone number is required'),
-      password: yup
-        .string()
-        .matches(/\w*[a-z]\w*/, "Password must have a small letter")
-        .matches(/\w*[A-Z]\w*/, "Password must have a capital letter")
-        .matches(/\d/, "Password must have a number")
-        .min(8, ({ min }) => `Password must be at least ${min} characters`)
-        .required('Password is required'),
-    })
-
-    return (
-
-      <LinearGradient
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0.25, y: 1.1 }}
-        locations={[0.2, 1]}
-        // colors={['#6C24AA', '#15002B']}
-        colors={['white', 'white']}
-        style={[styles.signin, { flex: 1, paddingTop: theme.SIZES.BASE * 4 }]}>
-        <Block middle>
-          <KeyboardAvoidingView behavior="padding" enabled>
-            {/* <Block middle>
+  return (
+    <LinearGradient
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0.25, y: 1.1 }}
+      locations={[0.2, 1]}
+      // colors={['#6C24AA', '#15002B']}
+      colors={['white', 'white']}
+      style={[styles.signin, { flex: 1, paddingTop: theme.SIZES.BASE * 4 }]}>
+      <Block middle>
+        <KeyboardAvoidingView behavior="padding" enabled>
+          {/* <Block middle>
               <Block row center space="between" style={{ marginVertical: theme.SIZES.BASE * 1.875 }}>
                 <Block flex middle right>
                   <Button
@@ -127,11 +82,11 @@ export default class SignIn extends React.Component {
                 </Block>
               </Block>
             </Block> */}
-            <Block middle style={{ paddingVertical: theme.SIZES.BASE * 2.625 }}>
-              <Image source={require('../assets/images/pic.png')} />
-            </Block>
-            <Block flex>
-              {/* <Block center>
+          <Block middle style={{ paddingVertical: theme.SIZES.BASE * 2.625 }}>
+            <Image source={require('../assets/images/pic.png')} />
+          </Block>
+          <Block flex>
+            {/* <Block center>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image source={require('../assets/images/apple-phone.png')} style={{ width: 20, height: 20 }} />
                   <Input
@@ -203,76 +158,65 @@ export default class SignIn extends React.Component {
                   </Text>
                 </Button>
               </Block> */}
-              <Formik
-                initialValues={{
-                  phoneNumber: '',
-                  password: '',
-                }}
-                onSubmit={values => console.log(values)}
-                validationSchema={signInValidationSchema}
-              >
-                {({ handleSubmit, isValid }) => (
-                  <Block center>
-                    <Block row width={300}>
-                      <Block flex={1} center>
-                        <Image source={require('../assets/images/apple-phone.png')} style={{ width: 20, height: 20 }} />
-                      </Block>
-                      <Block flex={15}>
-                        <Field
-                          component={CustomInput}
-                          name="phoneNumber"
-                          placeholder="Phone Number"
-                          keyboardType="numeric"
-                        />
-                      </Block>
+            <Formik
+              initialValues={{
+                phoneNumber: '',
+                password: '',
+              }}
+              onSubmit={values => console.log(values)}
+              validationSchema={signInValidationSchema}
+            >
+              {({ handleSubmit, isValid }) => (
+                <Block center>
+                  <Block row width={300}>
+                    <Block flex={1} center>
+                      <Image source={require('../assets/images/apple-phone.png')} style={{ width: 20, height: 20 }} />
                     </Block>
-                    <Block row width={300}>
-                      <Block flex={1} center>
-                        <Image source={require('../assets/images/forgot-password.png')} style={{ width: 20, height: 20 }} />
-                      </Block>
-                      <Block flex={15}>
-                        <Field
-                          component={CustomInput}
-                          name="password"
-                          placeholder="Password"
-                          secureTextEntry
-                        />
-                      </Block>
-                    </Block>
-                    <Block center flex style={{ marginTop: 20 }}>
-                      <Button
-                        size="large"
-                        shadowless
-                        // color={materialTheme.COLORS.BUTTON_COLOR}
-                        color='yellow'
-                        style={{ height: 48, width: 300 }}
-                        onPress={handleSubmit}
-                        disabled={!isValid}
-                      >
-                        <Text style={{ color: 'black' }}>SIGN IN</Text>
-                      </Button>
-                      <Button size="large" color="transparent" shadowless onPress={() => navigation.navigate('Sign Up')}>
-                        <Text
-                          center
-                          color={theme.COLORS.BLACK}
-                          size={theme.SIZES.FONT * 0.75}
-                          style={{ marginTop: 20 }}
-                        >
-                          {"Don't have an account? Sign Up"}
-                        </Text>
-                      </Button>
+                    <Block flex={15}>
+                      <Field
+                        component={CustomInput}
+                        name="phoneNumber"
+                        placeholder="Phone Number"
+                        keyboardType="numeric"
+                      />
                     </Block>
                   </Block>
-                )}
-              </Formik>
+                  <Block row width={300}>
+                    <Block flex={1} center>
+                      <Image source={require('../assets/images/forgot-password.png')} style={{ width: 20, height: 20 }} />
+                    </Block>
+                    <Block flex={15}>
+                      <Field
+                        component={CustomInput}
+                        name="password"
+                        placeholder="Password"
+                        secureTextEntry
+                      />
+                    </Block>
+                  </Block>
+                  <Block center flex style={{ marginTop: 20 }}>
+                    <Button
+                      size="large"
+                      shadowless
+                      // color={materialTheme.COLORS.BUTTON_COLOR}
+                      color='yellow'
+                      style={{ height: 48, width: 300 }}
+                      onPress={handleSubmit}
+                      disabled={!isValid}
+                    >
+                      <Text style={{ color: 'black' }}>SIGN IN</Text>
+                    </Button>
+                  </Block>
+                </Block>
+              )}
+            </Formik>
 
-            </Block>
-          </KeyboardAvoidingView>
-        </Block >
-      </LinearGradient >
+          </Block>
+        </KeyboardAvoidingView>
+      </Block >
+    </LinearGradient >
 
-    );
-  }
+  );
 }
 
 const styles = StyleSheet.create({
@@ -315,3 +259,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#e6e6e6'
   },
 });
+export default SignIn;
