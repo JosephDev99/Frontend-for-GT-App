@@ -81,7 +81,7 @@ export default class Cart extends React.Component {
             </Block>
           </Block>
           <Block flex row space="between" style={styles.options}>
-            <Block style={{marginTop: 7.5}}>
+            <Block style={{ marginTop: 7.5 }}>
               <Select
                 defaultIndex={1}
                 disabled={!item.stock}
@@ -169,7 +169,7 @@ export default class Cart extends React.Component {
 
     return (
       <Block flex style={styles.header}>
-        <Block style={{ marginBottom: theme.SIZES.BASE  }}>
+        <Block style={{ marginBottom: theme.SIZES.BASE }}>
           <Text>
             Cart subtotal ({productsQty} items):
             <Text color={materialTheme.COLORS.ERROR} bold>${total}</Text>
@@ -223,7 +223,7 @@ export default class Cart extends React.Component {
           color={materialTheme.COLORS.ACTIVE}
           onPress={() => navigation.navigate('SignIn')} >
           PROCEED TO CHECKOUT
-          </Button>
+        </Button>
       </Block>
     )
   }

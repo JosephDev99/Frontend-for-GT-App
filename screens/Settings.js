@@ -10,10 +10,10 @@ export default class Settings extends React.Component {
   toggleSwitch = switchNumber => this.setState({ [switchNumber]: !this.state[switchNumber] });
 
   renderItem = ({ item }) => {
-    const {navigate} = this.props.navigation;
+    const { navigate } = this.props.navigation;
 
-    switch(item.type) {
-      case 'switch': 
+    switch (item.type) {
+      case 'switch':
         return (
           <Block row middle space="between" style={styles.rows}>
             <Text size={14}>{item.title}</Text>
@@ -26,11 +26,11 @@ export default class Settings extends React.Component {
             />
           </Block>
         );
-      case 'button': 
+      case 'button':
         return (
           <Block style={styles.rows}>
             <TouchableOpacity onPress={() => (item.id !== 'Payment' && item.id !== 'gift') && navigate(item.id)}>
-              <Block row middle space="between" style={{paddingTop:7}}>
+              <Block row middle space="between" style={{ paddingTop: 7 }}>
                 <Text size={14}>{item.title}</Text>
                 <Icon name="angle-right" family="font-awesome" style={{ paddingRight: 5 }} />
               </Block>
@@ -52,7 +52,7 @@ export default class Settings extends React.Component {
       { title: "Manage Payment Options", id: "Payment", type: "button" },
       { title: "Manage Gift Cards", id: "gift", type: "button" },
     ];
-    
+
     const privacy = [
       { title: "User Agreement", id: "Agreement", type: "button" },
       { title: "Privacy", id: "Privacy", type: "button" },
@@ -61,7 +61,7 @@ export default class Settings extends React.Component {
 
     return (
       <View
-        
+
         style={styles.settings}>
         <FlatList
           data={recommended}
@@ -106,7 +106,7 @@ export default class Settings extends React.Component {
           renderItem={this.renderItem}
         />
       </View>
-      
+
     );
   }
 }

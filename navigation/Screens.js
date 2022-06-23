@@ -978,11 +978,25 @@ function HomeStack(props) {
     </Stack.Navigator>
   );
 }
+const defaultOpyions = ({ }) => ({
+  //Show sandwith-menu icon at the right
+  //Hide the left icon menu
+  headerLeftContainerStyle: { display: "none" },
+  headerRightContainerStyle: {
+    display: "flex",
+    justifyContent: "flex-start",
+    flexDirection: "row-reverse",
+    alignItems: "center",
+    marginRight: 10,
+  },
+  //Hide the left menu Title
 
+})
 function AppStack(props) {
   return (
     <Drawer.Navigator
       style={{ flex: 1 }}
+      screenOptions={defaultOpyions}
       drawerContent={(props) => (
         <CustomDrawerContent {...props} profile={profile} />
       )}

@@ -105,25 +105,25 @@ export default class Search extends React.Component {
     const { navigation } = this.props;
 
     return (
-        <FlatList
-          data={suggestions}
-          keyExtractor={(item, index) => item.id}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.suggestion}
-              onPress={() => navigation.navigate("Category", { ...item })}
-            >
-              <Block flex row middle space="between">
-                <Text size={14}>{item.title}</Text>
-                <Icon
-                  name="chevron-right"
-                  family="evilicon"
-                  style={{ paddingRight: 5 }}
-                />
-              </Block>
-            </TouchableOpacity>
-          )}
-        />
+      <FlatList
+        data={suggestions}
+        keyExtractor={(item, index) => item.id}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.suggestion}
+            onPress={() => navigation.navigate("Category", { ...item })}
+          >
+            <Block flex row middle space="between">
+              <Text size={14}>{item.title}</Text>
+              <Icon
+                name="chevron-right"
+                family="evilicon"
+                style={{ paddingRight: 5 }}
+              />
+            </Block>
+          </TouchableOpacity>
+        )}
+      />
     );
   };
 

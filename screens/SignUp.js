@@ -6,7 +6,6 @@ import { Block, Button, Input, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
 import { materialTheme } from '../constants/';
 import { HeaderHeight } from "../constants/utils";
-import { Icon } from '../components/';
 import { Formik, Field } from 'formik'
 import * as yup from 'yup'
 import CustomInput from '../components/CustomInput'
@@ -201,9 +200,6 @@ const SignUp = () => {
               {({ handleSubmit, isValid }) => (
                 <Block center>
                   <Block row width={300}>
-                    <Block flex={1} center>
-                      <Image source={require('../assets/images/user.png')} style={{ width: 20, height: 20 }} />
-                    </Block>
                     <Block flex={15}>
                       <Field
                         component={CustomInput}
@@ -213,9 +209,6 @@ const SignUp = () => {
                     </Block>
                   </Block>
                   <Block row width={300}>
-                    <Block flex={1} center>
-                      <Image source={require('../assets/images/apple-phone.png')} style={{ width: 20, height: 20 }} />
-                    </Block>
                     <Block flex={15}>
                       <Field
                         component={CustomInput}
@@ -226,9 +219,6 @@ const SignUp = () => {
                     </Block>
                   </Block>
                   <Block row width={300}>
-                    <Block flex={1} center>
-                      <Image source={require('../assets/images/forgot-password.png')} style={{ width: 20, height: 20 }} />
-                    </Block>
                     <Block flex={15}>
                       <Field
                         component={CustomInput}
@@ -239,9 +229,6 @@ const SignUp = () => {
                     </Block>
                   </Block>
                   <Block row width={300}>
-                    <Block flex={1} center>
-                      <Image source={require('../assets/images/forgot-password.png')} style={{ width: 20, height: 20 }} />
-                    </Block>
                     <Block flex={15}>
                       <Field
                         component={CustomInput}

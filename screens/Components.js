@@ -87,7 +87,7 @@ export default class Components extends React.Component {
             ERROR
           </Button>
           <Block row space="evenly">
-            <Block flex left style={{marginTop: 8, marginLeft: 10}}>
+            <Block flex left style={{ marginTop: 8, marginLeft: 10 }}>
               <Select
                 defaultIndex={1}
                 options={[1, 2, 3, 4, 5]}
@@ -381,7 +381,7 @@ export default class Components extends React.Component {
               decelerationRate={0}
               scrollEventThrottle={16}
               snapToAlignment="center"
-              style={{width}}
+              style={{ width }}
               showsHorizontalScrollIndicator={false}
               snapToInterval={cardWidth + (theme.SIZES.BASE * 0.375)}
               contentContainerStyle={{ paddingHorizontal: theme.SIZES.BASE / 2 }}

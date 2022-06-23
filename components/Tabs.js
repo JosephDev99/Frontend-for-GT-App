@@ -68,7 +68,7 @@ export default class Tabs extends React.Component {
       outputRange: [materialTheme.COLORS.MUTED, isActive ? materialTheme.COLORS.ACTIVE : materialTheme.COLORS.MUTED],
       extrapolate: 'clamp',
     });
-    
+
     const width = this.animatedValue.interpolate({
       inputRange: [0, 1],
       outputRange: ['0%', isActive ? '100%' : '0%'],

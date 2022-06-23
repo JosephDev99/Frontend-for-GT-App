@@ -169,9 +169,6 @@ const SignIn = () => {
               {({ handleSubmit, isValid }) => (
                 <Block center>
                   <Block row width={300}>
-                    <Block flex={1} center>
-                      <Image source={require('../assets/images/apple-phone.png')} style={{ width: 20, height: 20 }} />
-                    </Block>
                     <Block flex={15}>
                       <Field
                         component={CustomInput}
@@ -182,9 +179,6 @@ const SignIn = () => {
                     </Block>
                   </Block>
                   <Block row width={300}>
-                    <Block flex={1} center>
-                      <Image source={require('../assets/images/forgot-password.png')} style={{ width: 20, height: 20 }} />
-                    </Block>
                     <Block flex={15}>
                       <Field
                         component={CustomInput}
