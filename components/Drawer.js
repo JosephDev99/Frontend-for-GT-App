@@ -82,6 +82,15 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
+      case "Map":
+        return (
+          <Icon
+            size={15}
+            name="grid-on"
+            family="material"
+            color={focused ? "white" : materialTheme.COLORS.MUTED}
+          />
+        );
       case "Sign In":
         return (
           <Icon

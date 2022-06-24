@@ -25,6 +25,7 @@ import ProfileScreen from "../screens/Profile";
 import React from "react";
 import SearchScreen from "../screens/Search";
 import SettingsScreen from "../screens/Settings";
+import MapScreen from "../screens/Map";
 import SignInScreen from "../screens/SignIn";
 import SignUpScreen from "../screens/SignUp";
 import WomanScreen from "../screens/Woman";
@@ -978,6 +979,16 @@ function HomeStack(props) {
     </Stack.Navigator>
   );
 }
+function MapStack(props) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Map"
+        component={MapScreen}
+      />
+    </Stack.Navigator>
+  );
+}
 const defaultOpyions = ({ }) => ({
   //Show sandwith-menu icon at the right
   //Hide the left icon menu
@@ -1085,6 +1096,20 @@ function AppStack(props) {
       <Drawer.Screen
         name="New Collection"
         component={NewCollectionStack}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="grid-on"
+              family="material"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Map"
+        component={MapStack}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon
